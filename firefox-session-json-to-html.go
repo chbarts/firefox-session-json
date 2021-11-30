@@ -79,6 +79,7 @@ var (
 	upat   = flag.String("url-regex", "", "print only tabs where URL matches regex")
 	tpat   = flag.String("title-regex", "", "print only tabs where title matches regex")
 	max    = flag.Int("max", -1, "maximum number of tabs printed, -1 for unlimited")
+	title  = flag.String("title", "Session Dump", "HTML title attribute of output file")
 )
 
 type TabSession []struct {
@@ -217,7 +218,7 @@ func main() {
 		et = tend.Unix()
 	}
 
-	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>Session Dump</title></head>\n")
+	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", *title)
 	fmt.Fprintf(writer, "<body>\n")
 	if *drange {
 		fmt.Fprintf(writer, "<h1>%s - %s</h1>\n", time.Unix(keys[0], 0), time.Unix(keys[len(keys)-1], 0));

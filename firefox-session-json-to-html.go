@@ -202,26 +202,28 @@ func main() {
 		}
 	}
 
+	var st int64
+	var et int64
 	if *rev {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] > keys[j] })
-		st := keys[len(keys)-1]
+		st = keys[len(keys)-1]
 		if !tstart.IsZero() {
 			st = tstart.Unix()
 		}
 
-		et := keys[0]
+		et = keys[0]
 		if tend.Before(time.Unix(et, 0)) {
 			et = tend.Unix()
 		}
 
 	} else {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
-		st := keys[0]
+		st = keys[0]
 		if !tstart.IsZero() {
 			st = tstart.Unix()
 		}
 
-		et := keys[len(keys)-1]
+		et = keys[len(keys)-1]
 		if tend.Before(time.Unix(et, 0)) {
 			et = tend.Unix()
 		}

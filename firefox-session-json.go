@@ -106,6 +106,7 @@ func main() {
 		fmt.Fprintf(writer, "%T\n", v)
 		tlist, _ := v.(map[string]Tab)
 		fmt.Fprintf(writer, "%T\n", tlist)
+		fmt.Fprintf(writer, "%+v\n", tlist)
 
 		for j, w := range tlist {
 			// LastAccessed, URL, Title

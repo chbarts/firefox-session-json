@@ -14,7 +14,7 @@ import (
 //	"time"
 )
 
-type TabSession struct {
+type TabSession []struct {
 	Windows map[string]TabList `json:"windows"`
 	WindowsNumber int `json:"windowsNumber"`
 	WindowsInfo map[string]WindowInfo `json:"windowsInfo"`
@@ -101,7 +101,7 @@ func main() {
 	err = json.Unmarshal([]byte(input), &dump)
 	check(err)
 
-	for i, v := range dump.Windows {
+	for i, v := range dump[0].Windows {
 		fmt.Fprintf(writer, "Window Number %s\n", i)
 		for j, w := range v.Tabs {
 			// LastAccessed, URL, Title

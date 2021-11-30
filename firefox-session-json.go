@@ -104,10 +104,8 @@ func main() {
 	for i, v := range dump[0].Windows {
 		fmt.Fprintf(writer, "Window Number %s\n", i)
 		fmt.Fprintf(writer, "%T\n", v)
-		tlist, ok := v.(map[string]Tab)
-		if !ok {
-			panic("Cast failed")
-		}
+		tlist, _ := v.(map[string]Tab)
+		fmt.Fprintf(writer, "%T\n", tlist)
 
 		for j, w := range tlist {
 			// LastAccessed, URL, Title

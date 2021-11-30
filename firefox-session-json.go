@@ -3,18 +3,18 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	"flag"
+//	"flag"
 	"fmt"
-	"html"
+//	"html"
 	"io/ioutil"
 	"os"
-	"regexp"
-	"sort"
-	"strconv"
-	"time"
+//	"regexp"
+//	"sort"
+//	"strconv"
+//	"time"
 )
 
-type TabSession []struct {
+type TabSession struct {
 	Windows map[string]TabList `json:"windows"`
 	WindowsNumber int `json:"windowsNumber"`
 	WindowsInfo map[string]WindowInfo `json:"windowsInfo"`

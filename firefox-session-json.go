@@ -105,7 +105,7 @@ func main() {
 		fmt.Fprintf(writer, "Window Number %s\n", i)
 		fmt.Fprintf(writer, "%T\n", v)
 
-		for j, w := range tlist.Tabs {
+		for j, w := range v {
 			// LastAccessed, URL, Title
 			tab, ok := w.(Tab)
 			if !ok {

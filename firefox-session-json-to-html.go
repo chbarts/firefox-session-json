@@ -218,7 +218,7 @@ func main() {
 		et = tend.Unix()
 	}
 
-	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", *title)
+	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", html.EscapeString(*title))
 	fmt.Fprintf(writer, "<body>\n")
 	if *drange {
 		fmt.Fprintf(writer, "<h1>%s - %s</h1>\n", time.Unix(keys[0], 0), time.Unix(keys[len(keys)-1], 0));

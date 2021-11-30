@@ -15,7 +15,7 @@ import (
 )
 
 type TabSession []struct {
-	Windows map[string]TabList `json:"windows"`
+	Windows map[string]interface{} `json:"windows"` // map[string]TabList
 	WindowsNumber int `json:"windowsNumber"`
 	WindowsInfo map[string]WindowInfo `json:"windowsInfo"`
 	TabsNumber int `json:"tabsNumber"`
@@ -103,7 +103,12 @@ func main() {
 
 	for i, v := range dump[0].Windows {
 		fmt.Fprintf(writer, "Window Number %s\n", i)
-		for j, w := range v.Tabs {
+		tlist, ok := v.(TabList)
+		if !ok {
+			panic("Cast failed")
+		}
+
+		for j, w := range tlist.Tabs {
 			// LastAccessed, URL, Title
 			fmt.Fprintf(writer, "%s\t%d\t%s\t%s\n", j, w.LastAccessed, w.URL, w.Title)
 		}

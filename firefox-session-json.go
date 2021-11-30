@@ -102,15 +102,9 @@ func main() {
 	check(err)
 
 	for i, v := range dump[0].Windows {
-		fmt.Fprintf(writer, "Window Number %s\n", i)
-		fmt.Fprintf(writer, "%T\n", v)
-/*		tlist, _ := v.(map[string]*Tab)
-		fmt.Fprintf(writer, "%T\n", tlist)
-		fmt.Fprintf(writer, "%+v\n", tlist) */
-
 		for j, w := range v {
 			// LastAccessed, URL, Title
-			fmt.Fprintf(writer, "%s\t%d\t%s\t%s\n", j, w.LastAccessed, w.URL, w.Title)
+			fmt.Fprintf(writer, "%s\t%s\t%d\t%s\t%s\n", i, j, w.LastAccessed, w.URL, w.Title)
 		}
 	}
 

@@ -193,8 +193,8 @@ func main() {
 
 	items := make(map[int64]Tab)
 	var keys []int64
-	for i, v := range dump[0].Windows {
-		for j, w := range v {
+	for _, v := range dump[0].Windows {
+		for _, w := range v {
 			stamp := w.LastAccessed/1000
 			items[stamp] = w
 			keys = append(keys, stamp)

@@ -190,7 +190,6 @@ func main() {
 
 	var dump TabSession
 	err = json.Unmarshal([]byte(input), &dump)
-        input.Close()
 	check(err)
 
 	items := make(map[int64]Tab)

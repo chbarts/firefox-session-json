@@ -196,7 +196,7 @@ func main() {
 	var keys []int64
 	for _, v := range dump[0].Windows {
 		for _, w := range v {
-			stamp := w.LastAccessed/1000
+			stamp := w.LastAccessed
 			items[stamp] = w
 			keys = append(keys, stamp)
 		}
@@ -206,24 +206,24 @@ func main() {
 	var et int64
 	if *rev {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] > keys[j] })
-		st = keys[len(keys)-1]
+		st = keys[len(keys)-1]/1000
 		if !tstart.IsZero() {
 			st = tstart.Unix()
 		}
 
-		et = keys[0]
+		et = keys[0]/1000
 		if tend.Before(time.Unix(et, 0)) {
 			et = tend.Unix()
 		}
 
 	} else {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
-		st = keys[0]
+		st = keys[0]/1000
 		if !tstart.IsZero() {
 			st = tstart.Unix()
 		}
 
-		et = keys[len(keys)-1]
+		et = keys[len(keys)-1]/1000
 		if tend.Before(time.Unix(et, 0)) {
 			et = tend.Unix()
 		}
@@ -237,11 +237,11 @@ func main() {
 
 	fmt.Fprintf(writer, "<ol>\n")
 	for _, key := range keys {
-		if key < st {
+		if key/1000 < st {
 			continue
 		}
 
-		if key > et {
+		if key/1000 > et {
 			continue
 		}
 
@@ -261,7 +261,7 @@ func main() {
 			}
 		}
 
-		when := time.Unix(key, 0)
+		when := time.Unix(key/1000, 0)
 
 		if ret != nil {
 			if !ret.Match([]byte(v.Title)) {

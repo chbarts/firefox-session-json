@@ -197,9 +197,15 @@ func main() {
 	var keys []int64
 	for _, v := range dump[0].Windows {
 		for _, w := range v {
-			stamp := w.LastAccessed
-			items[stamp] = w
-			keys = append(keys, stamp)
+			if *byind {
+				ind := w.Index
+				items[int64(ind)] = w
+				keys = append(keys, int64(ind))
+			} else {
+				stamp := w.LastAccessed
+				items[stamp] = w
+				keys = append(keys, stamp)
+			}
 		}
 	}
 
@@ -207,27 +213,31 @@ func main() {
 	var et int64
 	if *rev {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] > keys[j] })
-		st = keys[len(keys)-1]/1000
-		if !tstart.IsZero() {
-			st = tstart.Unix()
-		}
+		if !*byind {
+			st = keys[len(keys)-1]/1000
+			if !tstart.IsZero() {
+				st = tstart.Unix()
+			}
 
-		et = keys[0]/1000
-		if tend.Before(time.Unix(et, 0)) {
-			et = tend.Unix()
+			et = keys[0]/1000
+			if tend.Before(time.Unix(et, 0)) {
+				et = tend.Unix()
+			}
 		}
 
 	} else {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
-		st = keys[0]/1000
-		if !tstart.IsZero() {
-			st = tstart.Unix()
-		}
+		if !*byind {
+			st = keys[0]/1000
+			if !tstart.IsZero() {
+				st = tstart.Unix()
+			}
 
-		et = keys[len(keys)-1]/1000
-		if tend.Before(time.Unix(et, 0)) {
-			et = tend.Unix()
-		}
+			et = keys[len(keys)-1]/1000
+			if tend.Before(time.Unix(et, 0)) {
+				et = tend.Unix()
+			}
+                }
 	}
 
 	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", html.EscapeString(*title))
@@ -238,11 +248,11 @@ func main() {
 
 	fmt.Fprintf(writer, "<ol>\n")
 	for _, key := range keys {
-		if key/1000 < st {
+		if !*byind && key/1000 < st {
 			continue
 		}
 
-		if key/1000 > et {
+		if !*byind && key/1000 > et {
 			continue
 		}
 

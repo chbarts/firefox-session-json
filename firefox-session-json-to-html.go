@@ -75,11 +75,12 @@ var (
 	inf    = flag.String("in", "/dev/stdin", "input file in JSON")
 	outf   = flag.String("out", "/dev/stdout", "output file in HTML")
 	drange = flag.Bool("range", false, "print range of dates represented in the dump")
-	rev    = flag.Bool("reverse", false, "sort reverse-chronologically (most recent first)")
+	rev    = flag.Bool("reverse", false, "sort reverse-chronologically (most recent first) or reverse index order")
 	upat   = flag.String("url-regex", "", "print only tabs where URL matches regex")
 	tpat   = flag.String("title-regex", "", "print only tabs where title matches regex")
 	max    = flag.Int("max", -1, "maximum number of tabs printed, -1 for unlimited")
 	title  = flag.String("title", "Session Dump", "HTML title attribute of output file")
+	byind  = flag.Bool("byindex", false, "Sort by index instead of by date last accessed")
 )
 
 type TabSession []struct {

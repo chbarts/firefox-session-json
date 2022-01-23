@@ -272,7 +272,7 @@ func main() {
 			}
 		}
 
-		when := time.Unix(key/1000, 0)
+		when := time.Unix(v.LastAccessed/1000, 0)
 
 		if ret != nil {
 			if !ret.Match([]byte(v.Title)) {

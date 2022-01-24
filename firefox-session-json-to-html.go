@@ -218,7 +218,28 @@ func main() {
 	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", html.EscapeString(*title))
 	fmt.Fprintf(writer, "<body>\n")
 	if *drange {
-		fmt.Fprintf(writer, "<h1>%s - %s</h1>\n", time.Unix(keys[0], 0), time.Unix(keys[len(keys)-1], 0));
+		var st int64
+		var et int64
+		for _, key := range keys {
+			v := items[key]
+			if !tstart.IsZero() && (v.LastAccessed/1000 < tstart.Unix()) {
+				continue
+			}
+
+			if !tend.IsZero() && (v.LastAccessed/1000 > tend.Unix()) {
+				continue
+			}
+
+			if (st == 0) || (v.LastAccessed() < st) {
+				st = v.LastAccessed()
+			}
+
+			if (et == 0) || (v.LastAccessed() > et) {
+				et = v.LastAccessed()
+			}
+		}
+
+		fmt.Fprintf(writer, "<h1>%s - %s</h1>\n", time.Unix(st/1000, 0), time.Unix(et/1000, 0))
 	}
 
 	fmt.Fprintf(writer, "<ol>\n")

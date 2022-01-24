@@ -230,12 +230,12 @@ func main() {
 				continue
 			}
 
-			if (st == 0) || (v.LastAccessed() < st) {
-				st = v.LastAccessed()
+			if (st == 0) || (v.LastAccessed < st) {
+				st = v.LastAccessed
 			}
 
-			if (et == 0) || (v.LastAccessed() > et) {
-				et = v.LastAccessed()
+			if (et == 0) || (v.LastAccessed > et) {
+				et = v.LastAccessed
 			}
 		}
 

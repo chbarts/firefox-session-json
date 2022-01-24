@@ -209,35 +209,10 @@ func main() {
 		}
 	}
 
-	var st int64
-	var et int64
 	if *rev {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] > keys[j] })
-		if !*byind {
-			st = keys[len(keys)-1]/1000
-			if !tstart.IsZero() {
-				st = tstart.Unix()
-			}
-
-			et = keys[0]/1000
-			if tend.Before(time.Unix(et, 0)) {
-				et = tend.Unix()
-			}
-		}
-
 	} else {
 		sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
-		if !*byind {
-			st = keys[0]/1000
-			if !tstart.IsZero() {
-				st = tstart.Unix()
-			}
-
-			et = keys[len(keys)-1]/1000
-			if tend.Before(time.Unix(et, 0)) {
-				et = tend.Unix()
-			}
-                }
 	}
 
 	fmt.Fprintf(writer, "<!DOCTYPE html><html>\n<head><meta charset=\"utf-8\"><title>%s</title></head>\n", html.EscapeString(*title))

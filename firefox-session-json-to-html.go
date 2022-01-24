@@ -248,15 +248,14 @@ func main() {
 
 	fmt.Fprintf(writer, "<ol>\n")
 	for _, key := range keys {
-		if !*byind && key/1000 < st {
-			continue
-		}
-
-		if !*byind && key/1000 > et {
-			continue
-		}
-
 		v := items[key]
+		if !tstart.IsZero() && (v.LastAccessed/1000 < tstart.Unix()) {
+			continue
+		}
+
+		if !tend.IsZero() && (v.LastAccessed/1000 > tend.Unix()) {
+			continue
+		}
 
 		if reu != nil {
 			if !reu.Match([]byte(v.URL)) {
